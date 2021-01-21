@@ -19,9 +19,7 @@ def solution(n):
     for index in range(len(tmp_str)-1, -1, -1):
         answer += int(tmp_str[index]) * (3 ** jisu)
         jisu = jisu + 1
-        #print(answer)
 
-    #print(tmp_str)
     return answer
 
 print(solution(125))
