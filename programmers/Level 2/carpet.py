@@ -1,6 +1,7 @@
 # Programmers 01/23 2021
 # 카펫
 
+# 시간단축을 위한 코드. uh
 def solution(brown, yellow):
     carpet = brown + yellow
 
