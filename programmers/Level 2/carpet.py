@@ -13,9 +13,11 @@ def solution(brown, yellow):
             if (width - 2) * (height - 2) == yellow:
                 break
 
-    return sorted([width, height], reverse=True)
+    answer = sorted([width, height], reverse=True)
+    return answer
 
 print(solution(24,24))
+
 # def solution(brown, yellow):
 #     answer = []
 #     yellow_list = []
