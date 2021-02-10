@@ -16,11 +16,11 @@ def solution(info, query):
         query_list += (tmp.split(" "))
         index += 1
 
-        # print('query: {}'.format(query_list))
+        print('query: {}'.format(query_list))
         for s in info:
             info_list = s.split(' ')
-            # if index == 5:
-            # print('info: {}'.format(info_list))
+            if index == 5:
+                print('info: {}'.format(info_list))
 
             count = 0
             for m, n in zip(query_list, info_list):
