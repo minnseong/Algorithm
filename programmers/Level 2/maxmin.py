@@ -2,10 +2,7 @@
 # 최댓값과 최솟값
 
 def solution(s):
-    answer = ''
     num_array = []
-    max_value = 0
-    min_value = 0
 
     array = list(s.split(" "))
     print(array)
