@@ -2,23 +2,13 @@
 # 땅따먹기
 
 def solution(land):
-    answer = 0
-    tmp = land.pop(0)
-    # tmp = [1,2,3,5]
-    # land = [5,6,7,8],[4,3,2,1]]
 
-    for i in range(4):
-        pick = [0, 1, 2, 3]
-        pick.remove(i)
-        # pick [1,2,3]
-        for idx in range(len(land)):
-            tmp[i] += max([land[idx][p] for p in pick])
-            pick = [0, 1, 2, 3]
-            pick.remove(land[idx].index(max([land[idx][p] for p in pick])))
+    for i in range(0, len(land)-1):
+        land[i+1][0] += max(land[i][1], land[i][2], land[i][3])
+        land[i+1][1] += max(land[i][0], land[i][2], land[i][3])
+        land[i+1][2] += max(land[i][0], land[i][1], land[i][3])
+        land[i+1][3] += max(land[i][0], land[i][1], land[i][2])
 
+    return max(land[len(land)-1])
 
-    print(tmp)
-    answer = max(i for i in tmp)
-    return answer
-
-print(solution([[1,2,3,5],[2,2,2,1],[8,1,1,1]]))
+print(solution([[1,2,3,5],[5,6,7,8],[4,3,2,1]]))
