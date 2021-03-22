@@ -1,26 +1,29 @@
 # Programmers 03/21 2021
-# 오픈채팅방
+# KaKao 오픈채팅방
 
 def solution(record):
     answer = []
     user = {}
     action = []
+    id = []
 
     for i in record:
         splitRecord = i.split(" ")
+
         if splitRecord[0] == "Enter":
             user[splitRecord[1]] = splitRecord[2]
-            action.append(splitRecord[1] + "님이 들어왔습니다.")
-        elif splitRecord[0] == "Leave":
-            action.append(splitRecord[1] + "님이 나갔습니다.")
-        elif splitRecord[0] == "Change":
-            user[splitRecord[1]] = splitRecord[2]
-    print(action)
+            id.append(splitRecord[1])
+            action.append("님이 들어왔습니다.")
 
-    for i in action:
-        for key in user:
-            if key in i:
-                answer.append(i.replace(key, user[key]))
+        if splitRecord[0] == "Leave":
+            id.append(splitRecord[1])
+            action.append("님이 나갔습니다.")
+
+        if splitRecord[0] == "Change":
+            user[splitRecord[1]] = splitRecord[2]
+
+    for i in range(len(action)):
+        answer.append(user[id[i]] + action[i])
 
     return answer
 
