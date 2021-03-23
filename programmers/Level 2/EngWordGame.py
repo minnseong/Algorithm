@@ -19,3 +19,5 @@ def solution(n, words):
         answer = [0, 0]
 
     return answer
+
+print(solution(3, ["tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"]))
