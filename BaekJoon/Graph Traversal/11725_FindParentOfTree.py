@@ -19,17 +19,17 @@ for t in tree:
 parent = [0] * (N-1)
 
 stack = [1]
-visit = []
+visit = [False] * N
 
 while stack:
     node = stack.pop()
-    if node not in visit:
+    if not visit[node-1]:
         for i in makeTree[node]:
-            if parent[i-2] == 0:
+            if i >= 2 and parent[i-2] == 0:
                 parent[i-2] = node
-        visit.append(node)
+        visit[node-1] = True
         if node in makeTree:
             stack.extend(makeTree[node])
 
-print(parent)
-print(makeTree)
+for i in parent:
+    print(i)
