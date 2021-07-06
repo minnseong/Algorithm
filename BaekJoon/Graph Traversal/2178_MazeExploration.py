@@ -14,6 +14,7 @@ def UDLR(p, n, m, maze):
 
 N, M = map(int, input().split())
 maze = []
+path = [[0]*M for _ in range(N)]
 
 for i in range(N):
     tmp = ''.join(input().split())
@@ -21,22 +22,17 @@ for i in range(N):
 
 queue = deque([[0, 0]])
 visit = []
-cnt = 0
 for _ in range(N):
     visit.append([False] * M)
 
-moveCnt = 0
-
 while queue:
     node = queue.popleft()
-    if node == [N-1, M-1]:
-        visit[node[0]][node[1]] = True
-        print(moveCnt - 1)
-        break
-
     nextMove = UDLR(node, N, M, maze)
 
-    if not visit[node[0]][node[1]]:
-        visit[node[0]][node[1]] = True
-        moveCnt += 1
-        queue.extend(nextMove)
+    for m in nextMove:
+        if not visit[m[0]][m[1]]:
+            queue.append(m)
+            path[m[0]][m[1]] = path[node[0]][node[1]] + 1
+            visit[m[0]][m[1]] = True
+
+print(path[N-1][M-1] + 1)
