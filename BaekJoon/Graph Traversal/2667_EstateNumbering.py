@@ -25,14 +25,14 @@ for i in range(N):
             count = 0
             while stack:
                 house = stack.pop()
-                count += 1
                 nextHouse = UDLR(house, N)
 
-                for h in nextHouse:
-                    if not visit[h[0]][h[1]]:
-                        stack.append(h)
-                        visit[h[0]][h[1]] = True
-            cnt.append(count-1)
+                if not visit[house[0]][house[1]]:
+                    visit[house[0]][house[1]] = True
+                    count += 1
+                    stack.extend(nextHouse)
+
+            cnt.append(count)
 
 print(len(cnt))
 cnt.sort()
