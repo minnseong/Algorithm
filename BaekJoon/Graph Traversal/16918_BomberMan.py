@@ -33,19 +33,16 @@ else:
         queue = deque()
         queue.extend(findBomb())
         visit = []
-        explode = []
 
         for i in range(R):
             visit.append([False] * C)
 
         while queue:
             bomb = queue.popleft()
-            explode.append(bomb)
             visit[bomb[0]][bomb[1]] = True
 
             for i in range(4):
                 if 0 <= bomb[0]-dx[i] < R and 0 <= bomb[1]-dy[i] < C:
-                    explode.append([bomb[0]-dx[i], bomb[1]-dy[i]])
                     visit[bomb[0]-dx[i]][bomb[1]-dy[i]] = True
 
         for i in range(R):
