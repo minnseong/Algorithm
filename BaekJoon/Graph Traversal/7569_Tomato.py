@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 
 def UDLRFB(p, m, n, h):
@@ -14,13 +15,13 @@ def UDLRFB(p, m, n, h):
     return move
 
 
-M, N, H = map(int, input().split())
+M, N, H = map(int, sys.stdin.readline().split())
 box = []
 
 for j in range(H):
     stair = []
     for i in range(N):
-        stair.append(list(map(int, input().split())))
+        stair.append(list(map(int, sys.stdin.readline().split())))
     box.append(stair)
 
 queue = deque()
