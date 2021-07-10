@@ -1,7 +1,7 @@
 N, K = map(int, input().split())
 
-ans = []
 circle = [i+1 for i in range(N)]
+ans = []
 n = 0
 
 while len(circle) > 0:
