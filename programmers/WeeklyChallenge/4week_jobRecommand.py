@@ -1,7 +1,7 @@
 def solution(table, languages, preference):
     jobDic = {1: "CONTENTS", 2: "GAME", 3: "HARDWARE", 4: "PORTAL", 5: "SI"}
     dic = {}
-    order = [4, 0, 2, 3, 1]
+    order = [1, 4, 2, 3, 0]
 
     for t in range(len(table)):
         job = table[order[t]].split()
