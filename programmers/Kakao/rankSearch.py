@@ -1,40 +1,51 @@
 # Programmers 02/10 2021
 # Kakao 순위 검색
 # 정확성 테스트 100%, 효율성 테스트 0%
+from itertools import combinations
+
 
 def solution(info, query):
-    answer = []
 
-    for z in range(len(query)):
-        answer.append(0)
-    index = -1
+    answer = []
+    db = {}
+    for i in info:
+        i = i.split()
+        condition = i[:-1]
+        score = int(i[-1])
+        for n in range(5):
+            combi = list(combinations([0, 1, 2, 3], n))
+            for c in combi:
+                tmpConditon = condition.copy()
+                for d in c:
+                    tmpConditon[d] = '-'
+                tmpJoin = '/'.join(tmpConditon)
+                if tmpJoin in db:
+                    db[tmpJoin].append(score)
+                else:
+                    db[tmpJoin] = [score]
+
+    for key in db.keys():
+        db[key].sort()
 
     for q in query:
-        query_list = q.split(" and ")
-        tmp = query_list[len(query_list)-1]
-        query_list.pop()
-        query_list += (tmp.split(" "))
-        index += 1
+        q = q.split(' ')
+        for i in range(3):
+            q.remove('and')
+        qCondition = '/'.join(q[:-1])
+        qScore = int(q[-1])
 
-        print('query: {}'.format(query_list))
-        for s in info:
-            info_list = s.split(' ')
-            if index == 5:
-                print('info: {}'.format(info_list))
-
-            count = 0
-            for m, n in zip(query_list, info_list):
-                if m == '-':
-                    count += 1
-                elif m == n:
-                    count += 1
-                elif m.isdigit() and n.isdigit() and int(n) >= int(m):
-                    count += 1
-                else:
-                    break
-
-            if count == len(info_list):
-                answer[index] += 1
+        if qCondition in db:
+            cnt = db[qCondition]
+            if len(cnt) > 0:
+                start, end = 0, len(cnt)
+                while start != end and start != len(cnt):
+                    if cnt[(start + end) // 2] >= qScore:
+                        end = (start + end) // 2
+                    else:
+                        start = (start + end) // 2 + 1
+                answer.append(len(cnt) - start)
+        else:
+            answer.append(0)
 
     return answer
 
