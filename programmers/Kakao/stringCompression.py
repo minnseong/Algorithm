@@ -1,4 +1,4 @@
-# Programmers 08/27 2021
+# Programmers 09/09 2021
 # 2020 KAKAO BLIND RECRUITMENT - 문자열 압축
 
 def split(str, n):
