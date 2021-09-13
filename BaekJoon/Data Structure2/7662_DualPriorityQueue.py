@@ -1,37 +1,39 @@
+# BackJoon 09/13 2021
+# 7662 DualPriorityQueue
+
 import sys
-from queue import PriorityQueue
+import heapq
 
 T = int(sys.stdin.readline())
-ans = []
 
 for _ in range(T):
     k = int(sys.stdin.readline())
-    MaxQueue = PriorityQueue()
-    MinQueue = PriorityQueue()
+    MaxQueue = []
+    MinQueue = []
     cnt = 0
 
     for _ in range(k):
         cmd = list(sys.stdin.readline().split())
         if cmd[0] == "I":
-            MaxQueue.put(int(cmd[1]) * (-1))
-            MinQueue.put(int(cmd[1]))
+            num = int(cmd[1])
+            heapq.heappush(MaxQueue, num*(-1))
+            heapq.heappush(MinQueue, num)
             cnt += 1
         else:
             if cnt == 0:
-                continue
-            else:
-                if cmd[1] == '1':
-                    MaxQueue.get()
-                else:
-                    MinQueue.get()
-            cnt -= 1
+                MaxQueue = []
+                MinQueue = []
+            elif cmd[1] == '1':
+                heapq.heappop(MaxQueue)
+                cnt -= 1
+            elif cmd[1] == '-1':
+                heapq.heappop(MinQueue)
+                cnt -= 1
 
     if cnt == 0:
-        ans.append("EMPTY")
+        print("EMPTY")
     elif cnt == 1:
-        ans.append(MinQueue.get())
+        print(str(heapq.heappop(MinQueue)))
     else:
-        ans.append(str(MaxQueue.get() * (-1)) + " " + str(MinQueue.get()))
-
-for a in ans:
-    print(a)
+        print(str(heapq.heappop(MaxQueue)*(-1)), end=" ")
+        print(str(heapq.heappop(MinQueue)))
