@@ -1,39 +1,58 @@
-# BackJoon 09/13 2021
-# 7662 DualPriorityQueue
+# BaekJoon 09/22 2021
+# 7662 이중 우선순위 큐
 
 import sys
 import heapq
 
 T = int(sys.stdin.readline())
+syncDic = {}
 
 for _ in range(T):
     k = int(sys.stdin.readline())
-    MaxQueue = []
-    MinQueue = []
     cnt = 0
 
     for _ in range(k):
         cmd = list(sys.stdin.readline().split())
+
+        if cnt == 0:
+            MaxQueue = []
+            MinQueue = []
+
         if cmd[0] == "I":
             num = int(cmd[1])
             heapq.heappush(MaxQueue, num*(-1))
             heapq.heappush(MinQueue, num)
+            if num in syncDic:
+                syncDic[num] += 1
+            else:
+                syncDic[num] = 1
             cnt += 1
+            print(syncDic)
         else:
             if cnt == 0:
-                MaxQueue = []
-                MinQueue = []
+                pass
             elif cmd[1] == '1':
-                heapq.heappop(MaxQueue)
+                while True:
+                    h = heapq.heappop(MaxQueue) * (-1)
+                    if syncDic[h] == 0:
+                        pass
+                    else:
+                        syncDic[h] -= 1
+                        break
                 cnt -= 1
+
             elif cmd[1] == '-1':
-                heapq.heappop(MinQueue)
+                while True:
+                    h = heapq.heappop(MinQueue)
+                    if syncDic[h] == 0:
+                        pass
+                    else:
+                        syncDic[h] -= 1
+                        break
                 cnt -= 1
 
     if cnt == 0:
         print("EMPTY")
-    elif cnt == 1:
-        print(str(heapq.heappop(MinQueue)))
     else:
         print(str(heapq.heappop(MaxQueue)*(-1)), end=" ")
         print(str(heapq.heappop(MinQueue)))
