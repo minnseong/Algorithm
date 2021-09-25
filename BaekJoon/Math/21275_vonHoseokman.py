@@ -1,6 +1,5 @@
-# BaeJoon 09/23 2021
+# BaekJoon 09/25 2021
 # 21275 폰 호석만
-# - 67
 
 def chNotation(num, n):
     res = 0
@@ -13,27 +12,37 @@ def chNotation(num, n):
     return res
 
 
-A, B = input().split()
+A, B = map(str, input().split())
 A_num = []
 B_num = []
 cnt = 0
 AB_num = 0
+A_max = max([i for i in A])
+B_max = max([i for i in B])
 
-for i in range(2, 37):
-    A_num.append(chNotation(A, i))
+if A_max.isalpha():
+    A_max = ord(A_max)-87
+else:
+    A_max = int(A_max)
 
-print(A_num)
-for j in range(2, 37):
-    if chNotation(B, j) in A_num:
-        cnt += 1
-        AB_num = chNotation(B, j)
-        print(AB_num)
+if B_max.isalpha():
+    B_max = ord(B_max)-87
+else:
+    B_max = int(B_max)
 
-print(cnt)
+for i in range(A_max+1, 37):
+    Anotation = chNotation(A, i)
+    for j in range(B_max+1, 37):
+        if i == j:
+            continue
+        else:
+            if Anotation <= pow(2, 63) and Anotation == chNotation(B, j):
+                res = [Anotation, i, j]
+                cnt += 1
+
 if cnt == 0:
     print('Impossible')
 elif cnt == 1:
-    print(str(AB_num) + " " + str(A_num.index(AB_num)+1) +
-          str(B_num.index(AB_num)+1))
+    print(str(res[0]) + " " + str(res[1]) + " " + str(res[2]))
 else:
     print('Multiple')
