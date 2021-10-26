@@ -4,6 +4,13 @@
 import sys
 import heapq
 
+def sync(num):
+    if syncDic[num] == 0:
+        return False
+    else:
+        syncDic[num] -= 1
+        return True
+
 T = int(sys.stdin.readline())
 syncDic = {}
 
@@ -27,32 +34,33 @@ for _ in range(T):
             else:
                 syncDic[num] = 1
             cnt += 1
-            print(syncDic)
         else:
             if cnt == 0:
                 pass
             elif cmd[1] == '1':
                 while True:
                     h = heapq.heappop(MaxQueue) * (-1)
-                    if syncDic[h] == 0:
-                        pass
-                    else:
-                        syncDic[h] -= 1
+                    if sync(h):
                         break
                 cnt -= 1
 
             elif cmd[1] == '-1':
                 while True:
                     h = heapq.heappop(MinQueue)
-                    if syncDic[h] == 0:
-                        pass
-                    else:
-                        syncDic[h] -= 1
+                    if sync(h):
                         break
                 cnt -= 1
-
+    
     if cnt == 0:
         print("EMPTY")
     else:
-        print(str(heapq.heappop(MaxQueue)*(-1)), end=" ")
-        print(str(heapq.heappop(MinQueue)))
+        while True:
+            h = heapq.heappop(MaxQueue) * (-1)
+            if sync(h):
+                print(h, end=" ")
+                break
+        while True:
+            h = heapq.heappop(MinQueue)
+            if sync(h):
+                print(h)
+                break
