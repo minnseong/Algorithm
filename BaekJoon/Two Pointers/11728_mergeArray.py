@@ -1,4 +1,4 @@
-# BackJoon 12/25 2021
+# BaekJoon 12/26 2021
 # 11728 배열 합치기
 
 N, M = map(int, input().split())
