@@ -20,7 +20,6 @@ def solution(string, i, s, e, dFlag):
                         e = 1
                     elif string[i+1] == string[len(string) -1 -i]:
                         s = 1
-                    
                     else:
                         flag = False
                         break
@@ -30,10 +29,8 @@ def solution(string, i, s, e, dFlag):
                     break
             i += 1
 
-
         if printFlag:
             return tmp
-            pass
         elif flag and not dFlag:
             return [0]
         elif flag and dFlag:
