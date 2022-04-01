@@ -9,7 +9,7 @@ dp = [0] * (n+1)
 for i in range(n):
     if i+consultingTime[i][0] <= n:
         for j in range(i+consultingTime[i][0], n+1):
-            dp[j] = max(dp[i+consultingTime[i][0]], dp[i]+consultingTime[i][1])
+            dp[j] = max(dp[j], dp[i+consultingTime[i][0]], dp[i]+consultingTime[i][1])
 
 print(dp[-1])
 
