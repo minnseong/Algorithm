@@ -1,44 +1,63 @@
-# Programmers 01/18 2022
+# Programmers 04/04 2022
 # 조이 스틱
-def checkAlla(s):
-    if len(s) != 0 and s.count("A") == len(s):
-        return True
+
+import copy
+
+def terminationCondition(visited):
+    flag = True
+    for v in visited:
+        if not v:
+            flag = False
+            break
+    return flag
+
+def maxIndexExcess(idx, length):
+    if idx == length:
+        return 0
     else:
-        return False
+        return idx
 
 def solution(name):
-    answer = 0
-    alpha = dict()
+    move = []
+    operationCnt = [min(ord(n)-ord('A'), ord('Z')-ord(n)+1) for n in name]
 
-    for i in range(26):
-        alpha[chr(65+i)] = i
+    # visited, 커서, 방향, moveCnt
+    # 종료 조건이 0인 지점외에 다 거쳐서 지나갓다면??
+    def tracking(visited, cur, dir, moveCnt):
+        visited_ = copy.deepcopy(visited)
+
+        if terminationCondition(visited_):
+            move.append(moveCnt)
+            return;
+        if moveCnt > len(name):
+            return;
+        
+        while True:
+            visited_[cur] = True
+
+            if terminationCondition(visited_):
+                move.append(moveCnt)
+                break
+
+            if operationCnt[cur] != 0 and (operationCnt[cur-1] == 0 or operationCnt[maxIndexExcess(cur+1, len(name))] == 0):
+                moveCnt += 1
+                tracking(visited_, cur+1, 1, moveCnt)
+                tracking(visited_, cur-1, -1, moveCnt)
+                return;
+            else:
+                moveCnt += 1
+                if dir == 1:
+                    cur += 1
+                else:
+                    cur -= 1
+
+    visited = [False if c != 0 else True for c in operationCnt]
+    if 'A' not in name:
+        return sum(operationCnt) + len(name) - 1
     
-    if len(name) > 1 and name[1] != "A":
-        for i in range(len(name)):
-            if alpha[name[i]] > 13:
-                answer += (26-alpha[name[i]])
-            else:
-                answer += alpha[name[i]]
-            
-            if checkAlla(name[i+1:]):
-                break
-            
-            if i < len(name)-1:
-                answer += 1
-    else:
-        name = (name[0] + name[::-1])[:-1]
-        for i in range(len(name)):
-            if alpha[name[i]] > 13:
-                answer += (26-alpha[name[i]])
-            else:
-                answer += alpha[name[i]]
-
-            if checkAlla(name[i+1:]):
-                break
-            
-            if i < len(name)-1:
-                answer += 1
-
-    return answer
-
-print(solution("ABABAAAAAAABA"))
+    tracking(visited, 0, 1, 0)
+    tracking(visited, 0, -1, 0)
+    # print(move)
+    return sum(operationCnt) + min(move)
+    
+print(solution("JEROEN"))
