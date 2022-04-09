@@ -1,31 +1,32 @@
-# BaekJoon 04/08 2022
+# BaekJoon 04/09 2022
 # 13549 숨바꼭질3
 
 from collections import deque
-
 n, k = map(int, input().split())
 
-visited = [False] * 100001
 time = [-1] * 100001
-queue = deque()
-queue.append(n)
-visited[n] = True
+visited = [False] * 100001
+
+queue = deque([n])
 time[n] = 0
+visited[n] = True
 
 while queue:
-    q = queue.popleft()
+    if time[k] != -1:
+        break
 
-    if q * 2 <= 10001 and not visited[q*2]:
-        time[q*2] = time[q]
-        visited[q*2] = True
-        queue.appendleft(q*2)
-    if q + 1 <= 10001 and not visited[q+1]:
-        time[q+1] = time[q]+1
-        visited[q+1] = True
-        queue.append(q+1)
-    if q - 1 >= 0 and not visited[q-1]:
-        time[q-1] = time[q]+1
-        visited[q-1] = True
-        queue.append(q-1)
+    s = queue.popleft()
+    if s*2 <= 100000 and not visited[s*2]:
+        time[s*2] = time[s]
+        visited[s*2] = True
+        queue.appendleft(s*2)
+    if s-1 >= 0 and not visited[s-1]:
+        time[s-1] = time[s] + 1
+        visited[s-1] = True
+        queue.append(s-1)
+    if s+1 <= 100000 and not visited[s+1]:
+        time[s+1] = time[s] + 1
+        visited[s+1] = True
+        queue.append(s+1)
 
 print(time[k])
