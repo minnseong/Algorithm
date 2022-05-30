@@ -1,35 +1,23 @@
-# BaekJoon 11/07 2021
+# BaekJoon 05/30 2022
 # 2812 크게 만들기
 
 N, K = map(int, input().split())
 num = list(map(int, str(input())))
 stack = []
 cnt = 0
-res = ""
 
 i = 0
-while i != N:
+while i < len(num):
+    while stack and stack[-1] < num[i]:
+        stack.pop()
+        cnt += 1
+        if cnt == K:
+            break
     if cnt == K:
-        stack += num[i:]
+        stack.extend(num[i:])
         break
-    if stack:
-        while True:
-            if stack and num[i] > stack[-1]:
-                stack.pop()
-                cnt += 1
-                if cnt == K:
-                    break
-            else:
-                break
-        stack.append(num[i])
-    else:
-        stack.append(num[i])
+    stack.append(num[i])
     i += 1
 
-for s in stack:
-    res += str(s)
-
-if len(res) > N-K:
-    res = res[:N-K]
-
+res = ''.join(map(str,stack[:N-K]))
 print(int(res))
