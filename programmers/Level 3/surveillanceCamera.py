@@ -8,14 +8,14 @@ def solution(routes):
     idx = 0
     while idx < len(routes):
         s, e = routes[idx]
-
         idxx = 0
+        
         for i in range(idx, len(routes)):
             if routes[i][0] <= e <= routes[i][1]:
                 idxx += 1
             else:
                 break
-        
+
         if idxx != 0:
             answer += 1
         idx += idxx
