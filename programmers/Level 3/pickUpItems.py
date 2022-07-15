@@ -1,7 +1,57 @@
-# Programmers 07/14 2022
+# Programmers 07/15 2022
 # 아이템 줍기
-# 합계: 57.9 / 100.0
 
+def solution(rectangle, characterX, characterY, itemX, itemY):
+
+    board = [[0] * 101 for _ in range(101)]
+    for r in rectangle:
+        for i in range(2*r[1], 2*r[3]+1):
+            for j in range(2*r[0], 2*r[2]+1):
+                board[i][j] = 1
+    
+    for r in rectangle:
+        for i in range(2*r[1]+1, 2*r[3]):
+            for j in range(2*r[0]+1, 2*r[2]):
+                board[i][j] = 0
+
+    dir = [[0,1], [1,0], [-1,0], [0,-1]]
+    visited = [[False] * 101 for i in range(101)]
+    
+    stack = [[2*characterY, 2*characterX]]
+
+    distance = -1
+    compareDistance = 0
+
+    while stack:
+        y, x = stack.pop()
+        visited[y][x] = True
+        distance += 1
+
+        if y == 2*itemY and x == 2*itemX:
+            compareDistance = distance // 2
+
+        for d in dir:
+            dy, dx = y+d[0], x+d[1]
+
+            if 0 <= dy < 101 and 0 <= dx < 101 and board[dy][dx] and not visited[dy][dx]:
+                stack.append([dy, dx])   
+                break 
+    
+    # for b in board:
+    #     print(*b)
+    return min(distance//2 - compareDistance + 1, compareDistance)
+
+print(solution([[1,1,7,4],[3,2,5,5],[4,3,6,9],[2,6,8,8]], 1, 3, 7, 8))
+print()
+print(solution([[1,1,8,4],[2,2,4,9],[3,6,9,8],[6,3,7,7]], 9,7,6,1))
+print()
+print(solution([[1,1,5,7]], 1, 1, 4, 7))
+print()
+print(solution([[2,1,7,5],[6,4,10,10]], 3, 1, 7, 10))
+print()
+print(solution([[2,2,5,5],[1,3,6,4],[3,1,4,6]], 1, 4, 6, 3))
+
+''' 합계: 57.9 / 100.0
 def fillBoard(board, point):
     for i in range(point[1], point[3]+1):
         for j in range(point[0], point[2]+1):
@@ -63,13 +113,4 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
     #     print(*b)
     print(distance+1)
     return min(distance+1-compareDistance, compareDistance)
-
-# print(solution([[1,1,7,4],[3,2,5,5],[4,3,6,9],[2,6,8,8]], 1, 3, 7, 8))
-# print()
-# print(solution([[1,1,8,4],[2,2,4,9],[3,6,9,8],[6,3,7,7]], 9,7,6,1))
-# print()
-# print(solution([[1,1,5,7]], 1, 1, 4, 7))
-# print()
-# print(solution([[2,1,7,5],[6,4,10,10]], 3, 1, 7, 10))
-# print()
-print(solution([[2,2,5,5],[1,3,6,4],[3,1,4,6]], 1, 4, 6, 3))
+'''
