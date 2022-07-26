@@ -8,7 +8,6 @@ bracket = list(input().strip())
 stack = []
 flag = True
 
-tmp = 0
 for b in bracket:
     if (b == ")" or b == "]") and not stack:
         flag = False
