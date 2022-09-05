@@ -1,3 +1,55 @@
+# Programmers 09/06 2022 다시 풀어보기 (코테 준비)
+# KaKao 뉴스 클러스터링
+
+from collections import defaultdict
+
+def breakByTwoLetters(s):
+    s = s.upper()
+    dic = defaultdict(int)
+    for i in range(len(s)-1):
+        if s[i].isalpha() and s[i+1].isalpha():
+            dic[s[i:i+2]] += 1
+    return dic
+    
+def getIntersection(dic1, dic2):
+    dic = dict()
+    for key in dic1.keys():
+        if key in dic2.keys():
+            dic[key] = min(dic1[key], dic2[key])
+    
+    for key in dic2.keys():
+        if key in dic1.keys():
+            dic[key] = min(dic1[key], dic2[key])
+
+    return sum(dic.values())
+    
+def getUnion(dic1, dic2):
+    dic = dict()
+    for key in dic1.keys():
+        if key in dic:
+            dic[key] = max(dic[key], dic1[key])
+        else:
+            dic[key] = dic1[key]
+            
+    for key in dic2.keys():
+        if key in dic:
+            dic[key] = max(dic[key], dic2[key])
+        else:
+            dic[key] = dic2[key]
+
+    return sum(dic.values())
+    
+def solution(str1, str2):
+    dic1 = breakByTwoLetters(str1)
+    dic2 = breakByTwoLetters(str2)
+    
+    try:
+        result = getIntersection(dic1, dic2) / getUnion(dic1, dic2)
+        return int(result * 65536)
+    except:
+        return 65536
+    
+
 # Programmers 04/03 2021
 # KaKao 뉴스 클러스터링
 
