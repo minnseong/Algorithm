@@ -1,3 +1,36 @@
+# Programmers 09/09 2022 다시 풀어보기 (코테 준비)
+# KaKao 캐시
+
+from collections import deque
+
+def solution(cacheSize, cities):
+    runTime = 0
+    
+    if cacheSize == 0:
+        return len(cities) * 5
+    
+    for i in range(len(cities)):
+        cities[i] = cities[i].upper()
+        
+    cache = deque([])
+    cacheCount = 0
+    for c in cities:
+        if c in set(cache):
+            cache.remove(c)
+            cache.append(c)
+            runTime += 1
+                
+        else:
+            if cacheCount == cacheSize:
+                cache.popleft()
+                cache.append(c)
+            else:
+                cache.append(c)
+                cacheCount += 1
+            runTime += 5
+    
+    return runTime
+
 # Programmers 04/03 2021
 # KaKao 캐시
 from collections import deque

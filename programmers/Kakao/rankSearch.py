@@ -1,3 +1,33 @@
+# Programmers 09/09 2022 다시 풀어보기 (코테 준비)
+# Kakao 순위 검색
+
+from collections import defaultdict
+from itertools import combinations
+from bisect import bisect_left, bisect_right
+
+def solution(info, query):
+    querys = [q.replace("- ", "").replace("and ", "").split(" ") for q in query]
+    user_infos = [i.split(" ") for i in info]
+    
+    dic = defaultdict(list)
+    for u in user_infos:
+        score = int(u[-1])
+        for i in range(0, 5):
+            combi = list(combinations(u[:-1], i))
+            for c in combi:
+                dic[''.join(c)].append(score)
+                
+    for key in dic.keys():
+        dic[key].sort()
+                
+    result = []
+    for qs in querys:
+        score = int(qs[-1])
+        c = "".join(qs[:-1])
+        result.append(len(dic[c])-bisect_left(dic[c], score))
+    
+    return result
+
 # Programmers 02/10 2021
 # Kakao 순위 검색
 # 정확성 테스트 100%, 효율성 테스트 0%
