@@ -1,3 +1,43 @@
+# Programmers 10/06 2022
+# 주차 요금 계산
+
+from collections import defaultdict
+import math
+
+def calculateTime(time):
+    hour, minute = list(map(int, time.split(":")))
+    
+    return 60*hour + minute
+
+def calculateFee(time, fees):
+    if fees[0] >= time:
+        return fees[1]
+    else:
+        return fees[1] + math.ceil((time-fees[0]) / fees[2]) * fees[3]
+    
+
+def solution(fees, records):
+    answer = []
+    car_dict = defaultdict(list)
+    time_dict = defaultdict(int)
+    
+    for r in records:
+        time, car_number, types = r.split(" ")
+        car_dict[car_number].append(time)
+    
+    for k, v in car_dict.items():
+        for i in range(0, len(v), 2):
+            if i == len(v)-1:
+                time_dict[k] += (calculateTime("23:59")-calculateTime(v[i]))
+            else:
+                time_dict[k] += (calculateTime(v[i+1])-calculateTime(v[i]))
+            
+    for k in sorted(time_dict.keys()):
+        print(time_dict[k])
+        answer.append(calculateFee(time_dict[k], fees))
+        
+    return answer
+    
 # Programmers 01/15 2022
 # KaKao 주차 요금 계산
 import math
