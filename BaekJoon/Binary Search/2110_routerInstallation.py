@@ -1,28 +1,29 @@
-# BaekJoon 01/13 2022
-# 2110 공유기 설치
+# BaekJoon 03/01 2023
+# 골드4 - 공유기 설치
+
+import sys
 
 N, C = map(int, input().split())
-home = [int(input()) for _ in range(N)]
+home = [int(sys.stdin.readline()) for _ in range(N)]
 home.sort()
 
-start = 1
-end = home[-1] - home[0]
-res = 0
+start, end = 0, home[-1]-home[0]
 
+answer = 0
 while start <= end:
-    mid = (start + end) // 2
-    tmp = home[0]
-    cnt = 1
+    mid = (start+end) // 2
 
-    for i in range(1, len(home)):
-        if home[i] >= tmp+mid:
+    cur = home[0]
+    cnt = 1
+    for i in range(1, N):
+        if home[i]-cur >= mid:
             cnt += 1
-            tmp = home[i]
+            cur = home[i]
     
     if cnt >= C:
+        answer = mid
         start = mid + 1
-        res = mid
     else:
         end = mid - 1
 
-print(res)
+print(answer)
