@@ -1,34 +1,36 @@
-# BaekJoon 05/27 2022
+# BaekJoon 03/11 2023
 # 1197 최소 스패닝 트리
 
 import sys
-input = sys.stdin.readline
 
-def find(parent, x):
-    if parent[x] != x:
-        parent[x] = find(parent, parent[x])
-    return parent[x]
+V, E = map(int, input().split())
 
-def union(parent, x, y):
-    px = find(parent, x)
-    py = find(parent, y)
+graph = [list(map(int, sys.stdin.readline().split())) for _ in range(E)]
+graph.sort(key=lambda x:x[2])
 
-    if px > py:
-        parent[px] = py
-    else:
-        parent[py] = px
+global parents
+parents = [i for i in range(V+1)]
 
-v, e = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(e)]
+def find(x):
+    if parents[x] != x:
+        parents[x] = find(parents[x])
+    return parents[x]
 
-graph.sort(key=lambda x : x[2])
-parent = [i for i in range(0, v+1)]
-res = 0
+def union(x, y):
+    x_parent = find(x)
+    y_parent = find(y)
 
+    if x_parent != y_parent:
+        if x_parent > y_parent:
+            parents[x_parent] = y_parent
+        else:
+            parents[y_parent] = x_parent
+
+answer = 0
 for g in graph:
-    a, b, c = g
-    if find(parent, a) != find(parent, b):
-        res += c
-        union(parent, a, b)
+    x, y, cost = g
+    if find(x) != find(y):
+        answer += cost
+        union(x, y)
 
-print(res)
+print(answer)
