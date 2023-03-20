@@ -1,42 +1,44 @@
-# BaekJoon 06/02 2022
+# BaekJoon 03/20 2023
 # 1991 트리 순회
 
 import sys
-input = sys.stdin.readline
 
-n = int(input())
+N = int(input())
 tree = dict()
 
-for _ in range(n):
-    node, left, right = map(str, input().split())
-    tree[node] = [left, right]
+for _ in range(N):
+    a, b, c = sys.stdin.readline().split()
+    tree[a] = [b, c]
 
-prTravel = []
-def preOrder(node):
-    prTravel.append(node)
-    if tree[node][0] != '.':
-        preOrder(tree[node][0])
-    if tree[node][1] != '.':
-        preOrder(tree[node][1])
-iTravel = []
-def inOrder(node):
-    if tree[node][0] != '.':
-        inOrder(tree[node][0])
-    iTravel.append(node)
-    if tree[node][1] != '.':
-        inOrder(tree[node][1])
-poTravel = []
-def postOrder(node):
-    if tree[node][0] != '.':
-        postOrder(tree[node][0])
-    if tree[node][1] != '.':
-        postOrder(tree[node][1])
-    poTravel.append(node)
+preorder_list = []
+inorder_list = []
+postorder_list = []
 
-preOrder('A')
-inOrder('A')
-postOrder('A')
+def preorder(root):
+    preorder_list.append(root)
+    if tree[root][0] != '.':
+        preorder(tree[root][0])
+    if tree[root][1] != '.':
+        preorder(tree[root][1])
 
-print(''.join(prTravel))
-print(''.join(iTravel))
-print(''.join(poTravel))
+def inorder(root):
+    if tree[root][0] != '.':
+        inorder(tree[root][0])
+    inorder_list.append(root)
+    if tree[root][1] != '.':
+        inorder(tree[root][1])
+
+def postorder(root):
+    if tree[root][0] != '.':
+        postorder(tree[root][0])
+    if tree[root][1] != '.':
+        postorder(tree[root][1])
+    postorder_list.append(root)
+
+preorder('A')
+inorder('A')
+postorder('A')
+
+print(''.join(preorder_list))
+print(''.join(inorder_list))
+print(''.join(postorder_list))
